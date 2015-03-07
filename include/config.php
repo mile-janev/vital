@@ -4,7 +4,7 @@
  * Database config variables
  */
 define("DB_HOST", "localhost");
-define("DB_USER", "radovis");
-define("DB_PASSWORD", "ypwU5k39");
-define("DB_DATABASE", "radovis9");
+define("DB_USER", "simyanin_vital");
+define("DB_PASSWORD", "S1my@n!n_vital");
+define("DB_DATABASE", "simyanin_vital");
 ?>

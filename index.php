@@ -77,6 +77,8 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 echo json_encode($response);
             }
         }
+    } else if ($tag == 'values') {
+        
     } else {
         echo "Invalid Request";
     }
