@@ -19,7 +19,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     $db = new DB_Functions();
 
     // response Array
-    $response = array("tag" => $tag, "success" => 0, "error" => 0);
+    $response = array("tag" => $tag, "status" => 0);
 
     // check for tag type
     if ($tag == 'login') {
@@ -29,10 +29,9 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 
         // check for user
         $user = $db->getUserByEmailAndPassword($email, $password);
-        if ($user != false) {
+        if ($user) {
             // user found
-            // echo json with success = 1
-            $response["success"] = 1;
+            $response["status"] = 1;
             $response["user"]["name"] = $user["name"];
             $response["user"]["email"] = $user["email"];
             $response["user"]["created_at"] = $user["created_at"];
@@ -41,8 +40,8 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         } else {
             // user not found
             // echo json with error = 1
-            $response["error"] = 1;
-            $response["error_msg"] = "Incorrect email or password!";
+            $response["status"] = 0;
+            $response["message"] = "Incorrect email or password.";
             echo json_encode($response);
         }
     } else if ($tag == 'register') {
@@ -54,15 +53,15 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         // check if user is already existed
         if ($db->userExists($email)) {
             // user is already existed - error response
-            $response["error"] = 2;
-            $response["error_msg"] = "User already existed";
+            $response["status"] = 0;
+            $response["message"] = "This email is already registered.";
             echo json_encode($response);
         } else {
             // store user
             $user = $db->storeUser($name, $email, $password);
             if ($user) {
                 // user stored successfully
-                $response["success"] = 1;
+                $response["status"] = 1;
                 $response["user"]["name"] = $user["name"];
                 $response["user"]["email"] = $user["email"];
                 $response["user"]["created_at"] = $user["created_at"];
@@ -70,8 +69,8 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 echo json_encode($response);
             } else {
                 // user failed to store
-                $response["error"] = 1;
-                $response["error_msg"] = "Error occured in Registartion";
+                $response["status"] = 0;
+                $response["message"] = "Error occured in Registartion. Pleas try again.";
                 echo json_encode($response);
             }
         }
@@ -87,16 +86,15 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             $values = $db->storeVital($user_id, $parameter, $value);
             
             if ($values) {
-                $response["success"] = 1;
-                $response["error_msg"] = "Cool";
+                $response["status"] = 1;
+                $response["message"] = "Your data is logged.";
             }
             
             echo json_encode($response);
         } else {
             //user not found
-            //echo json with error = 1
-            $response["error"] = 1;
-            $response["error_msg"] = "Error with synchronizing.";
+            $response["status"] = 0;
+            $response["message"] = "Error with synchronizing.";
             echo json_encode($response);
         }
         

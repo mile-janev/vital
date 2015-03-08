@@ -73,8 +73,7 @@ class DB_Functions {
      */
     public function userExists($email) {
         $result = mysql_query("SELECT email from users WHERE email = '$email'");
-        $no_of_rows = mysql_num_rows($result);
-        if ($no_of_rows > 0) {
+        if (mysql_num_rows($result) > 0) {
             // user existed 
             return true;
         } else {
