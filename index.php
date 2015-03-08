@@ -78,7 +78,9 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             }
         }
     } else if ($tag == 'values') {
-        
+        $response["error"] = 1;
+        $response["error_msg"] = "Error oti ne e zavrseno";
+        echo json_encode($response);
     } else {
         echo "Invalid Request";
     }
