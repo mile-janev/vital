@@ -24,12 +24,12 @@ class DB_Functions {
      */
     public function storeUser($name, $email, $password) {
         $password = sha1($password); // encrypted password
-        $result = mysql_query("INSERT INTO users(name, email, password, created_at, updated_at) VALUES(NULL, '$name', '$email', '$password', NOW(), NOW())");
+        $result = mysql_query("INSERT INTO users(id, name, email, password, created_at, updated_at) VALUES(NULL, '$name', '$email', '$password', NOW(), NOW())");
         // check for successful store
         if ($result) {
             // get user details 
-            $uid = mysql_insert_id(); // last inserted id
-            $result = mysql_query("SELECT * FROM users WHERE uid = $uid");
+            $id = mysql_insert_id(); // last inserted id
+            $result = mysql_query("SELECT * FROM users WHERE id = $id");
             // return user details
             return mysql_fetch_array($result);
         } else {
@@ -84,16 +84,16 @@ class DB_Functions {
     }
 
     /**
-     * Storing new vital param value
+     * Storing new vital param into table logs
      * returns vital param details
      */
     public function storeVital($user_id, $parameter, $value) {
-        $result = mysql_query("INSERT INTO value(id, parameter, value, created_at, user_id) VALUES(NULL, '$parameter', '$value', NOW(), '$user_id')");
+        $result = mysql_query("INSERT INTO logs(id, parameter, value, created_at, user_id) VALUES(NULL, '$parameter', '$value', NOW(), '$user_id')");
         // check for successful store
         if ($result) {
             // get user details 
             $vital_id = mysql_insert_id(); // last inserted id
-            $result = mysql_query("SELECT * FROM value WHERE id = $vital_id");
+            $result = mysql_query("SELECT * FROM logs WHERE id = $vital_id");
             // return user details
             return mysql_fetch_array($result);
         } else {

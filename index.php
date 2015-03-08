@@ -83,7 +83,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         $user_DB = $db->getUserByEmail($email);
         if ($user_DB != false) {
             //user found
-            $user_id = $user_DB["uid"];
+            $user_id = $user_DB["id"];
             $values = $db->storeVital($user_id, $parameter, $value);
             
             if ($values) {
@@ -105,6 +105,6 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         echo "Invalid Request";
     }
 } else {
-    echo "Access Denied";
+    echo "Server side not available.";
 }
 ?>
