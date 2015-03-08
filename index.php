@@ -33,7 +33,6 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             // user found
             // echo json with success = 1
             $response["success"] = 1;
-            $response["uid"] = $user["unique_id"];
             $response["user"]["name"] = $user["name"];
             $response["user"]["email"] = $user["email"];
             $response["user"]["created_at"] = $user["created_at"];
@@ -53,7 +52,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         $password = $_POST['password'];
 
         // check if user is already existed
-        if ($db->isUserExisted($email)) {
+        if ($db->userExists($email)) {
             // user is already existed - error response
             $response["error"] = 2;
             $response["error_msg"] = "User already existed";
@@ -64,7 +63,6 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             if ($user) {
                 // user stored successfully
                 $response["success"] = 1;
-                $response["uid"] = $user["unique_id"];
                 $response["user"]["name"] = $user["name"];
                 $response["user"]["email"] = $user["email"];
                 $response["user"]["created_at"] = $user["created_at"];
