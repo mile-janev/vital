@@ -62,6 +62,21 @@ class DB_Functions {
             return false;
         }
     }
+    
+    /**
+     * Get user by email
+     */
+    public function getUserByEmail($email) {
+        $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
+        // check for result 
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            $result = mysql_fetch_array($result);
+            return $result;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Check user is existed or not
@@ -108,17 +123,13 @@ class DB_Functions {
      * Storing new vital param value
      * returns vital param details
      */
-    public function storeVital($name, $email, $password) {
-        $uuid = uniqid('', true);
-        $hash = $this->hashSSHA($password);
-        $encrypted_password = $hash["encrypted"]; // encrypted password
-        $salt = $hash["salt"]; // salt
-        $result = mysql_query("INSERT INTO users(unique_id, name, email, encrypted_password, salt, created_at) VALUES('$uuid', '$name', '$email', '$encrypted_password', '$salt', NOW())");
+    public function storeVital($user_id, $parameter, $value) {
+        $result = mysql_query("INSERT INTO value(id, parameter, value, created_at, user_id) VALUES(NULL, '$parameter', '$value', NOW(), '$user_id')");
         // check for successful store
         if ($result) {
             // get user details 
-            $uid = mysql_insert_id(); // last inserted id
-            $result = mysql_query("SELECT * FROM users WHERE uid = $uid");
+            $vital_id = mysql_insert_id(); // last inserted id
+            $result = mysql_query("SELECT * FROM value WHERE id = $vital_id");
             // return user details
             return mysql_fetch_array($result);
         } else {

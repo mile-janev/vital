@@ -78,8 +78,30 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             }
         }
     } else if ($tag == 'values') {
-        $response["error"] = 1;
-        $response["error_msg"] = "Error oti ne e zavrseno";
+        $email = $_POST['email'];
+        $parameter = $_POST['parameter'];
+        $value = $_POST['value'];
+        
+        $user_DB = $db->getUserByEmail($email);
+        if ($user_DB != false) {
+            //user found
+            $user_id = $user_DB["uid"];
+            $values = $db->storeVital($user_id, $parameter, $value);
+            
+            if ($values) {
+                $response["success"] = 1;
+                $response["error_msg"] = "Cool";
+            }
+            
+            echo json_encode($response);
+        } else {
+            //user not found
+            //echo json with error = 1
+            $response["error"] = 1;
+            $response["error_msg"] = "Error with synchronizing.";
+            echo json_encode($response);
+        }
+        
         echo json_encode($response);
     } else {
         echo "Invalid Request";
