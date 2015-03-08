@@ -82,11 +82,11 @@ class DB_Functions {
     }
 
     /**
-     * Storing new vital param into table logs
-     * returns vital param details
+     * Storing new vital sign into table logs
+     * returns vital sign details
      */
-    public function storeVital($user_id, $parameter, $value) {
-        $result = mysql_query("INSERT INTO logs(id, parameter, value, created_at, updated_at, user_id) VALUES(NULL, '$parameter', '$value', NOW(), NOW(), '$user_id')");
+    public function storeVital($user_id, $sign, $value) {
+        $result = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES(NULL, '$sign', '$value', NOW(), NOW(), '$user_id')");
         // check for successful store
         if ($result) {
             // get user details 

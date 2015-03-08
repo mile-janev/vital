@@ -76,14 +76,14 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         }
     } else if ($tag == 'values') {
         $email = $_POST['email'];
-        $parameter = $_POST['parameter'];
+        $sign = $_POST['sign'];
         $value = $_POST['value'];
         
         $user_DB = $db->getUserByEmail($email);
         if ($user_DB != false) {
             //user found
             $user_id = $user_DB["id"];
-            $values = $db->storeVital($user_id, $parameter, $value);
+            $values = $db->storeVital($user_id, $sign, $value);
             
             if ($values) {
                 $response["status"] = 1;
