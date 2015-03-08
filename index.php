@@ -94,7 +94,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         } else {
             //user not found
             $response["status"] = 0;
-            $response["message"] = "Error with synchronizing.";
+            $response["message"] = "Error with saving.";
             echo json_encode($response);
         }
         
