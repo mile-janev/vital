@@ -42,9 +42,8 @@ class DB_Functions {
      */
     public function getUserByEmailAndPassword($email, $password) {
         $password_val = sha1($password);
-        $result = mysql_query("SELECT * FROM users WHERE email = '$email' AND password = '$password_val") or die(mysql_error());
+        $result = mysql_query("SELECT * FROM users WHERE email = '$email' AND password = '$password_val'") or die(mysql_error());
         // check for result 
-        $no_of_rows = mysql_num_rows($result);
         if (mysql_num_rows($result) > 0) {
             $user = mysql_fetch_array($result);
             return $user;
