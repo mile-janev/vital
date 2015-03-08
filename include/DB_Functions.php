@@ -88,7 +88,7 @@ class DB_Functions {
      * returns vital param details
      */
     public function storeVital($user_id, $parameter, $value) {
-        $result = mysql_query("INSERT INTO logs(id, parameter, value, created_at, user_id) VALUES(NULL, '$parameter', '$value', NOW(), '$user_id')");
+        $result = mysql_query("INSERT INTO logs(id, parameter, value, created_at, updated_at, user_id) VALUES(NULL, '$parameter', '$value', NOW(), NOW(), '$user_id')");
         // check for successful store
         if ($result) {
             // get user details 
