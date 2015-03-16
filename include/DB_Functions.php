@@ -92,8 +92,39 @@ class DB_Functions {
             // get user details 
             $vital_id = mysql_insert_id(); // last inserted id
             $result = mysql_query("SELECT * FROM logs WHERE id = $vital_id");
-            // return user details
+            // return logs details
             return mysql_fetch_array($result);
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Storing new vital sign into table logs
+     * returns vital sign details
+     */
+    public function updateVital($server_id, $value) {
+        $result = mysql_query("UPDATE logs SET value='$value', updated_at=NOW() WHERE id='$server_id'");
+        // check for successful store
+        if ($result) {
+            // get user details 
+            $vital_id = mysql_insert_id(); // last inserted id
+            $result = mysql_query("SELECT * FROM logs WHERE id = $server_id");
+            // return logs details
+            return mysql_fetch_array($result);
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Check if server_id exists in server database
+     * returns true if server_id exists, else false
+     */
+    public function checkServerId($server_id) {
+        $result = mysql_query("SELECT id FROM logs WHERE id = $server_id");
+        if (mysql_num_rows($result) > 0) {
+            return true;
         } else {
             return false;
         }

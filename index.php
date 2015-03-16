@@ -75,29 +75,44 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             }
         }
     } else if ($tag == 'values') {
+        $update = FALSE;
+        $value = $_POST['value'];
         $email = $_POST['email'];
         $sign = $_POST['sign'];
-        $value = $_POST['value'];
-        
-        $user_DB = $db->getUserByEmail($email);
-        if ($user_DB != false) {
-            //user found
-            $user_id = $user_DB["id"];
-            $values = $db->storeVital($user_id, $sign, $value);
-            
-            if ($values) {
-                $response["status"] = 1;
-                $response["message"] = "Your data is logged.";
-            }
-            
-            echo json_encode($response);
-        } else {
-            //user not found
-            $response["status"] = 0;
-            $response["message"] = "Error with saving.";
-            echo json_encode($response);
+    
+        if (isset($_POST['server_id']) && $_POST['server_id'] != "") {
+            $server_id = $_POST['server_id'];
+            $update = $db->checkServerId($server_id);
         }
         
+        if (!$update) {
+            $user_DB = $db->getUserByEmail($email);
+            if ($user_DB != false) {
+                //user found
+                $user_id = $user_DB["id"];
+                $values = $db->storeVital($user_id, $sign, $value);
+                if ($values) {
+                    $response["server_id"] = $values["id"];
+                }
+                $response["status"] = 1;
+                $response["message"] = "Your data is logged.";
+            } else {
+                //user not found
+                $response["status"] = 0;
+                $response["message"] = "Error with saving.";
+            }
+            
+        } else {
+            $values = $db->updateVital($server_id, $value);
+            if ($values) {
+                $response["server_id"] = $values["id"];
+                $response["status"] = 1;
+                $response["message"] = "Your data is updated.";
+            } else {
+                $response["status"] = 0;
+                $response["message"] = "Error with updating.";
+            }
+        }
         echo json_encode($response);
     } else {
         echo "Invalid Request";
