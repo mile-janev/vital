@@ -130,6 +130,14 @@ class DB_Functions {
         }
     }
     
+    public function syncUserData($email, $params) {
+        foreach ($params as $param) {
+            $data = explode("<>", $param);
+            
+        }
+        
+    }
+    
 }
 
 ?>
