@@ -130,12 +130,31 @@ class DB_Functions {
         }
     }
     
+    /**
+     * 
+     * @param type $email
+     * @param type $params
+     */
     public function syncUserData($email, $params) {
+        $user = $this->getUserByEmail($email);
+        $user_id = $user['id'];
+        
+        $result1 = mysql_query("DELETE FROM logs WHERE user_id=$user_id");
+        
         foreach ($params as $param) {
             $data = explode("<>", $param);
-            
+            if ($data[1]) {//If server_id exists
+                $result2 = mysql_query("SELECT * FROM logs WHERE id=".$data[1]);
+                if (mysql_num_rows($result2) == 0) {
+                    $result3 = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES($data[1], '$data[2]', '$data[3]', $data[4], NOW(), '$user_id')");
+                } else {
+                    $result3 = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES(NULL, '$data[2]', '$data[3]', $data[4], NOW(), '$user_id')");
+                }
+            } else {
+                $result3 = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES(NULL, '$data[2]', '$data[3]', $data[4], NOW(), '$user_id')");
+            }
         }
-        
+        return TRUE;
     }
     
 }

@@ -13,11 +13,16 @@ if (isset($_POST['email']) && $_POST['email'] != '') {
     require_once 'include/DB_Functions.php';
     $db = new DB_Functions();
 
-    $db->syncUserData($email, $params);
+    $synced = $db->syncUserData($email, $params);
     
     // response Array
-    $response = array("status" => 0);
-    $response["message"] = $paramsNum;
+    if ($synced) {
+        $response = array("status" => 1);
+        $response["message"] = "Synced.";
+    } else {
+        $response = array("status" => 0);
+        $response["message"] = "Sync failed.";
+    }
     
     echo json_encode($response);
     
