@@ -4,7 +4,7 @@ if (isset($_POST['email']) && $_POST['email'] != '') {
     $email = $_POST['email'];
     $paramsNum = $_POST['params_num'];
     
-    $params = [];
+    $params = array();
     for ($i=0; $i<$paramsNum; $i++) {
         $params[$i] = $_POST[$i];
     }
