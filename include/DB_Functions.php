@@ -85,8 +85,8 @@ class DB_Functions {
      * Storing new vital sign into table logs
      * returns vital sign details
      */
-    public function storeVital($user_id, $sign, $value) {
-        $result = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES(NULL, '$sign', '$value', NOW(), NOW(), '$user_id')");
+    public function storeVital($user_id, $sign, $value, $description) {
+        $result = mysql_query("INSERT INTO logs(id, sign, value, description, created_at, updated_at, user_id) VALUES(NULL, '$sign', '$value', '$description', NOW(), NOW(), '$user_id')");
         // check for successful store
         if ($result) {
             // get user details 
@@ -146,12 +146,12 @@ class DB_Functions {
             if ($data[1]) {//If server_id exists
                 $result2 = mysql_query("SELECT * FROM logs WHERE id=".$data[1]);
                 if (mysql_num_rows($result2) == 0) {
-                    $result3 = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES('$data[1]', '$data[2]', '$data[3]', '$data[4]', NOW(), '$user_id')");
+                    $result3 = mysql_query("INSERT INTO logs(id, sign, value, description, created_at, updated_at, user_id) VALUES('$data[1]', '$data[2]', '$data[3]', '$data[4]', '$data[5]', NOW(), '$user_id')");
                 } else {
-                    $result3 = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES(NULL, '$data[2]', '$data[3]', '$data[4]', NOW(), '$user_id')");
+                    $result3 = mysql_query("INSERT INTO logs(id, sign, value, description, created_at, updated_at, user_id) VALUES(NULL, '$data[2]', '$data[3]', '$data[4]', '$data[5]', NOW(), '$user_id')");
                 }
             } else {
-                $result3 = mysql_query("INSERT INTO logs(id, sign, value, created_at, updated_at, user_id) VALUES(NULL, '$data[2]', '$data[3]', '$data[4]', NOW(), '$user_id')");
+                $result3 = mysql_query("INSERT INTO logs(id, sign, value, description, created_at, updated_at, user_id) VALUES(NULL, '$data[2]', '$data[3]', '$data[4]', '$data[5]', NOW(), '$user_id')");
             }
         }
         return TRUE;

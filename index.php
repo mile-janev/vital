@@ -79,6 +79,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         $value = $_POST['value'];
         $email = $_POST['email'];
         $sign = $_POST['sign'];
+        $description = $_POST['description'];
     
         if (isset($_POST['server_id']) && $_POST['server_id'] != "") {
             $server_id = $_POST['server_id'];
@@ -90,7 +91,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             if ($user_DB != false) {
                 //user found
                 $user_id = $user_DB["id"];
-                $values = $db->storeVital($user_id, $sign, $value);
+                $values = $db->storeVital($user_id, $sign, $value, $description);
                 if ($values) {
                     $response["server_id"] = $values["id"];
                 }
