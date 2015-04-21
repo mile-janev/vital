@@ -103,8 +103,8 @@ class DB_Functions {
      * Storing new vital sign into table logs
      * returns vital sign details
      */
-    public function updateVital($server_id, $value) {
-        $result = mysql_query("UPDATE logs SET value='$value', updated_at=NOW() WHERE id='$server_id'");
+    public function updateVital($server_id, $value, $description) {
+        $result = mysql_query("UPDATE logs SET value='$value', description='$description', updated_at=NOW() WHERE id='$server_id'");
         // check for successful store
         if ($result) {
             // get user details 

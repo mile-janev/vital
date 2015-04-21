@@ -104,7 +104,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             }
             
         } else {
-            $values = $db->updateVital($server_id, $value);
+            $values = $db->updateVital($server_id, $value, $description);
             if ($values) {
                 $response["server_id"] = $values["id"];
                 $response["status"] = 1;
