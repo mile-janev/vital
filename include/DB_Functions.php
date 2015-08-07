@@ -24,12 +24,12 @@ class DB_Functions {
      */
     public function storeUser($name, $email, $password) {
         $password = sha1($password); // encrypted password
-        $result = mysql_query("INSERT INTO users(id, name, email, password, created_at, updated_at) VALUES(NULL, '$name', '$email', '$password', NOW(), NOW())");
+        $result = mysql_query("INSERT INTO user(id, name, email, password, created_at, updated_at) VALUES(NULL, '$name', '$email', '$password', NOW(), NOW())");
         // check for successful store
         if ($result) {
             // get user details 
             $id = mysql_insert_id(); // last inserted id
-            $result = mysql_query("SELECT * FROM users WHERE id = $id");
+            $result = mysql_query("SELECT * FROM user WHERE id = $id");
             // return user details
             return mysql_fetch_array($result);
         } else {
@@ -42,7 +42,7 @@ class DB_Functions {
      */
     public function getUserByEmailAndPassword($email, $password) {
         $password_val = sha1($password);
-        $result = mysql_query("SELECT * FROM users WHERE email = '$email' AND password = '$password_val'") or die(mysql_error());
+        $result = mysql_query("SELECT * FROM user WHERE email = '$email' AND password = '$password_val'") or die(mysql_error());
         // check for result 
         if (mysql_num_rows($result) > 0) {
             $user = mysql_fetch_array($result);
@@ -56,7 +56,7 @@ class DB_Functions {
      * Get user by email
      */
     public function getUserByEmail($email) {
-        $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
+        $result = mysql_query("SELECT * FROM user WHERE email = '$email'") or die(mysql_error());
         // check for result 
         $no_of_rows = mysql_num_rows($result);
         if ($no_of_rows > 0) {
@@ -71,7 +71,7 @@ class DB_Functions {
      * Check user is existed or not
      */
     public function userExists($email) {
-        $result = mysql_query("SELECT email from users WHERE email = '$email'");
+        $result = mysql_query("SELECT email from user WHERE email = '$email'");
         if (mysql_num_rows($result) > 0) {
             // user existed 
             return true;
