@@ -24,7 +24,7 @@ class DB_Functions {
      */
     public function storeUser($name, $email, $password) {
         $password = sha1($password); // encrypted password
-        $result = mysql_query("INSERT INTO user(id, name, email, password, created_at, updated_at) VALUES(NULL, '$name', '$email', '$password', NOW(), NOW())");
+        $result = mysql_query("INSERT INTO user(id, name, email, password, role_id, created_at, updated_at, last_login, auth_key, reset_token, active, image) VALUES(NULL, '$name', '$email', '$password', '2', NOW(), NOW(), NULL, NULL, NULL, 1, NULL)");
         // check for successful store
         if ($result) {
             // get user details 
